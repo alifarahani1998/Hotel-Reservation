@@ -1,4 +1,4 @@
 #!/bin/bash
 
-go build -o bookings web/*.go
-./bookings -dbname=bookings -dbuser= -dbpass=
+go build -o bookings cmd/web/*.go
+./bookings -dbname= -dbuser= -dbpass=

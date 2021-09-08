@@ -62,7 +62,7 @@ func run() (*driver.DB, error) {
 	gob.Register(map[string]int{})
 
 
-	//read flags 
+	//read flags from command line
 	inProduction := flag.Bool("production", true, "Application is in production")
 	useCache := flag.Bool("cache", true, "Use template cache")
 	dbHost := flag.String("dbhost", "localhost", "Database host")
@@ -76,14 +76,16 @@ func run() (*driver.DB, error) {
 
 
 	if *dbName == "" || *dbUser == "" {
-		fmt.Println("missing required flags")
-		os.Exit(1)
+		log.Fatal("missing required flags")
 	}
 
 
+	// starting mail server
 	mailChan := make(chan models.MailData)
 	app.MailChan = mailChan
 
+
+	
 	app.InProduction = *inProduction
 	app.UseCache = *useCache
 
@@ -94,7 +96,7 @@ func run() (*driver.DB, error) {
 	app.ErrorLog = errorLog
 
 	session = scs.New()
-	session.Lifetime = 24 * time.Minute
+	session.Lifetime = 24 * time.Hour
 	session.Cookie.Persist = true
 	session.Cookie.SameSite = http.SameSiteLaxMode
 	session.Cookie.Secure = app.InProduction
@@ -102,23 +104,26 @@ func run() (*driver.DB, error) {
 	app.Session = session
 
 	//connect to database
-	log.Println("connecting to database...")
+	fmt.Println("connecting to database...")
 	connectionString := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=%s", *dbHost, *dbPort, *dbName, *dbUser, *dbPass, *dbSSL)
 	db, err := driver.ConnectSQL(connectionString)
 	if err != nil {
 		log.Fatal("cannot connect to database! Dying ...")
 	}
-	log.Println("connected to database!")
+	fmt.Println("connected to database!")
 
+
+	// getting template cache
 	tc, err := render.CreateTemplateCache()
 
 	if err != nil {
 		log.Fatal("cannot create template chache")
-		return nil, err
 	}
 
 	app.TemplateCache = tc
 
+
+	
 	repo := handlers.NewRepo(&app, db)
 	handlers.NewHandlers(repo)
 

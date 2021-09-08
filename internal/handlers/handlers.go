@@ -44,13 +44,13 @@ func NewHandlers(r *Repository) {
 
 //Home is the home page handler
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "home.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "home.page.html", &models.TemplateData{})
 }
 
 // About is the about page handler
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	// send the data to the template
-	render.Template(w, r, "about.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "about.page.html", &models.TemplateData{})
 }
 
 // Reservation renders the make a reservation page and displays form
@@ -83,7 +83,7 @@ func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["reservation"] = res
 
-	render.Template(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "make-reservation.page.html", &models.TemplateData{
 		Form:      forms.New(nil),
 		Data:      data,
 		StringMap: stringMap,
@@ -161,7 +161,7 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		stringMap["start_date"] = sd
 		stringMap["end_date"] = ed
 
-		render.Template(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+		render.Template(w, r, "make-reservation.page.html", &models.TemplateData{
 			Form:      form,
 			Data:      data,
 			StringMap: stringMap, // fixes error after invalid data
@@ -231,17 +231,17 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 
 // Generals renders the room page
 func (m *Repository) Generals(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "generals.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "generals.page.html", &models.TemplateData{})
 }
 
 // Majors renders the room page
 func (m *Repository) Majors(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "majors.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "majors.page.html", &models.TemplateData{})
 }
 
 // Availability renders the search availability page
 func (m *Repository) Availability(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "search-availability.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "search-availability.page.html", &models.TemplateData{})
 }
 
 // PostAvailability renders the search availability page
@@ -294,7 +294,7 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 
 	m.App.Session.Put(r.Context(), "reservation", res)
 
-	render.Template(w, r, "choose-room.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "choose-room.page.html", &models.TemplateData{
 		Data: data,
 	})
 }
@@ -365,7 +365,7 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 
 // Contact renders the search availability page
 func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "contact.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "contact.page.html", &models.TemplateData{})
 }
 
 // ReservationSummary displays the reservation summary page
@@ -388,7 +388,7 @@ func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) 
 	stringMap["start_date"] = sd
 	stringMap["end_date"] = ed
 
-	render.Template(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "reservation-summary.page.html", &models.TemplateData{
 		Data:      data,
 		StringMap: stringMap,
 	})
@@ -451,7 +451,7 @@ func (m *Repository) BookRoom(w http.ResponseWriter, r *http.Request) {
 
 // ShowLogin shows the login screen
 func (m *Repository) ShowLogin(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "login.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "login.page.html", &models.TemplateData{
 		Form: forms.New(nil),
 	})
 }
@@ -473,7 +473,7 @@ func (m *Repository) PostShowLogin(w http.ResponseWriter, r *http.Request) {
 	form.IsEmail("email")
 
 	if !form.Valid() {
-		render.Template(w, r, "login.page.tmpl", &models.TemplateData{
+		render.Template(w, r, "login.page.html", &models.TemplateData{
 			Form: form,
 		})
 		return
@@ -500,7 +500,7 @@ func (m *Repository) Logout(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) AdminDashboard(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "admin-dashboard.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "admin-dashboard.page.html", &models.TemplateData{})
 }
 
 // AdminAllReservations shows all reservations inu admin tool
@@ -514,7 +514,7 @@ func (m *Repository) AdminAllReservations(w http.ResponseWriter, r *http.Request
 	data := make(map[string]interface{})
 	data["reservations"] = reservations
 
-	render.Template(w, r, "admin-all-reservations.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "admin-all-reservations.page.html", &models.TemplateData{
 		Data: data,
 	})
 }
@@ -529,7 +529,7 @@ func (m *Repository) AdminNewReservations(w http.ResponseWriter, r *http.Request
 
 	data := make(map[string]interface{})
 	data["reservations"] = reservations
-	render.Template(w, r, "admin-new-reservations.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "admin-new-reservations.page.html", &models.TemplateData{
 		Data: data,
 	})
 }
@@ -565,7 +565,7 @@ func (m *Repository) AdminShowReservation(w http.ResponseWriter, r *http.Request
 	data := make(map[string]interface{})
 	data["reservation"] = res
 
-	render.Template(w, r, "admin-reservations-show.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "admin-reservations-show.page.html", &models.TemplateData{
 		StringMap: stringMap,
 		Data:      data,
 		Form:      forms.New(nil),
@@ -705,7 +705,7 @@ func (m *Repository) AdminReservationsCalendar(w http.ResponseWriter, r *http.Re
 		m.App.Session.Put(r.Context(), fmt.Sprintf("block_map_%d", x.ID), blockMap)
 	}
 
-	render.Template(w, r, "admin-reservations-calendar.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "admin-reservations-calendar.page.html", &models.TemplateData{
 		StringMap: stringMap,
 		Data:      data,
 		IntMap:    intMap,

@@ -1,6 +1,6 @@
 # Bookings and Reservations
 
-This is the repository for my bookings and reservations project.
+Feel free to reserve your ideal room, It's written in Golang!
 
 - Built in Go version 1.15
   

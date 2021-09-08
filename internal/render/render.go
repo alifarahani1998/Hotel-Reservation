@@ -69,11 +69,10 @@ func Template(w http.ResponseWriter, r *http.Request, tmpl string, td *models.Te
 	var tc map[string]*template.Template
 
 	if app.UseCache {
-		// get the template cache from the app config
+		// get the template cache from the app config (in production mode)
 		tc = app.TemplateCache
 	} else {
-		// this is just used for testing, so that we rebuild
-		// the cache on every request
+		// this is just used for testing, so that we rebuild the cache on every request
 		tc, _ = CreateTemplateCache()
 	}
 
@@ -104,7 +103,7 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 
 	myCache := map[string]*template.Template{}
 
-	pages, err := filepath.Glob(fmt.Sprintf("%s/*.page.tmpl", pathToTemplates))
+	pages, err := filepath.Glob(fmt.Sprintf("%s/*.page.html", pathToTemplates))
 	if err != nil {
 		return myCache, err
 	}
@@ -116,13 +115,13 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 			return myCache, err
 		}
 
-		matches, err := filepath.Glob(fmt.Sprintf("%s/*.layout.tmpl", pathToTemplates))
+		matches, err := filepath.Glob(fmt.Sprintf("%s/*.layout.html", pathToTemplates))
 		if err != nil {
 			return myCache, err
 		}
 
 		if len(matches) > 0 {
-			ts, err = ts.ParseGlob(fmt.Sprintf("%s/*.layout.tmpl", pathToTemplates))
+			ts, err = ts.ParseGlob(fmt.Sprintf("%s/*.layout.html", pathToTemplates))
 			if err != nil {
 				return myCache, err
 			}

@@ -24,10 +24,12 @@ func SessionLoad(next http.Handler) http.Handler {
 	return session.LoadAndSave(next)
 }
 
+
+// Auth decides whether or not a user can access a page
 func Auth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if !helpers.IsAuthenticated(r) {
-			session.Put(r.Context(), "error", "Log in first!")
+			session.Put(r.Context(), "error", "Sorry, You're not permitted!")
 			http.Redirect(w, r, "/user/login", http.StatusSeeOther)
 			return
 		}

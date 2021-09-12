@@ -548,3 +548,21 @@ func (m *postgresDBRepo) DeleteBlockByID(id int) error {
 	}
 	return nil
 }
+
+
+
+// GetHashedPasswordByEmail returns hashedpassword by email
+func (m *postgresDBRepo) GetHashedPasswordByEmail(email string) (string, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var hashedPassword string
+
+	row := m.DB.QueryRowContext(ctx, "select password from users where email = $1", email)
+	err := row.Scan(&hashedPassword)
+	if err != nil {
+		return "", err
+	}
+
+	return hashedPassword, nil
+}

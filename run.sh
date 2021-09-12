@@ -1,4 +1,4 @@
 #!/bin/bash
 
 go build -o bookings cmd/web/*.go
-./bookings -dbname= -dbuser= -dbpass=
+./bookings -dbname=bookings -dbuser=postgres -dbpass=adF90962

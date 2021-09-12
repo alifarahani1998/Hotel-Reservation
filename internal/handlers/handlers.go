@@ -49,7 +49,6 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 
 // About is the about page handler
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
-	// send the data to the template
 	render.Template(w, r, "about.page.html", &models.TemplateData{})
 }
 
@@ -810,4 +809,36 @@ func (m *Repository) AdminPostReservationsCalendar(w http.ResponseWriter, r *htt
 
 	m.App.Session.Put(r.Context(), "flash", "Changes saved")
 	http.Redirect(w, r, fmt.Sprintf("/admin/reservations-calendar?y=%d&m=%d", year, month), http.StatusSeeOther)
+}
+
+
+// ForgetPassword shows forget-pass page
+func (m *Repository) ForgetPassword(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "forget-pass.page.html", &models.TemplateData{})
+}
+
+
+// PostForgetPassword posts forgotten password to the user's email address
+func (m *Repository) PostForgetPassword(w http.ResponseWriter, r *http.Request) {
+	_ = m.App.Session.RenewToken(r.Context())
+
+	err := r.ParseForm()
+	if err != nil {
+		log.Println(err)
+	}
+
+	email := r.Form.Get("email")
+
+	hashedPassword, err := m.DB.GetHashedPasswordByEmail(email)
+	if err != nil {
+		m.App.Session.Put(r.Context(), "error", "This Email address doesn't exist")
+		http.Redirect(w, r, "/forget-pass", http.StatusSeeOther)
+		return
+	}
+
+	// unhash password and send to user's email
+	fmt.Println(hashedPassword)
+
+	m.App.Session.Put(r.Context(), "flash", "check your email to reset the password")
+	http.Redirect(w, r, "/user/login", http.StatusSeeOther)
 }

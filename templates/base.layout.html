@@ -32,7 +32,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        <a class="nav-link" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/about">About</a>
@@ -48,27 +48,27 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/search-availability">Search Availability</a>
+                        <a class="nav-link" href="/search-availability">Book Now</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/contact">Contact</a>
                     </li>
                     <li class="nav-item">
                         {{if eq .IsAuthenticated 1}}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-bs-toggle="dropdown"
-                           aria-expanded="false">
-                            Admin
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/admin/dashboard">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
-                        </ul>
-                    </li>
-                    {{else}}
-                        <a class="nav-link" href="/user/login" tabindex="-1" aria-disabled="true">Login</a>
-                    {{end}}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/admin/dashboard">Dashboard</a></li>
+                                <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
+                            </ul>
+                        </li>
+                        {{else}}
+                            <a class="nav-link" href="/user/login" tabindex="-1" aria-disabled="true">Login</a>
+                        {{end}}
                     </li>
                 </ul>
             </div>

@@ -1,2 +1,9 @@
-schema.sql
+.idea
+coverage.out
 bookings
+run.sh
+run.bat
+.DS_Store
+*.code-workspace
+database.yml
+schema.sql
